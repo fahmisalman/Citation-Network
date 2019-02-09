@@ -7,8 +7,13 @@ def load_data(loc):
     return line
 
 
-if __name__ == '__main__':
-    line = load_data("Dataset/outputacm.txt")
-    for row in line:
+def get_author(data):
+    authors = []
+    for row in data:
         if '@' in row:
-            print(row)
+            authors.append(row)
+    return authors
+
+
+if __name__ == '__main__':
+    data = load_data("Dataset/outputacm.txt")
