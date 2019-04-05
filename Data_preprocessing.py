@@ -46,14 +46,16 @@ if __name__ == '__main__':
             cit.append([cleaning(auth[i])])
         else:
             cit[-1].append(cleaning(auth[i]))
-    res = []
+    res = [['Source', 'Target']]
     i = 0
     while i < len(cit):
-        j = 1
-        while j < len(cit[i]):
-            res.append([cit[i][j], cit[i][0]])
-            j += 1
+        if len(cit[i]) > 100:
+            j = 1
+            while j < len(cit[i]):
+                res.append([cit[i][j], cit[i][0]])
+                j += 1
         i += 1
+    print(len(res))
 
     save_data('Data_citation.csv', res)
 

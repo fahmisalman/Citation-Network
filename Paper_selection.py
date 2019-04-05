@@ -15,7 +15,7 @@ def load_csv(loc):
 if __name__ == '__main__':
 
     data = np.array(load_csv('Data_citation.csv'))
-    y = data[:, 1]
+    y = data[:, 0]
     y_u = list(set(y))
 
     unique, counts = np.unique(y, return_counts=True)
@@ -24,5 +24,3 @@ if __name__ == '__main__':
     sorted_x = sorted(d_u.items(), key=operator.itemgetter(1), reverse=False)
     for i, j in enumerate(sorted_x):
         print(i, j)
-
-
