@@ -10,10 +10,12 @@ def load_data(loc):
 
 def get_paper(data):
     paper = []
+    index = []
     for row in data:
         # if '!' not in row and '*' not in row:
         if '#index' in row:
             paper.append(row)
+            index.append(row)
         if '#t' in row:
             paper.append(row)
         if '#%' in row:
@@ -22,7 +24,7 @@ def get_paper(data):
             paper.append(row[2:-1])
         if '#c' in row:
             paper.append(row)
-    return paper
+    return paper, index
 
 
 def cleaning(line):
@@ -47,13 +49,37 @@ def save_data(loc, data):
 
 if __name__ == '__main__':
     data = load_data("Dataset/outputacm.txt")
-    auth = get_paper(data)
+    auth, index = get_paper(data)
+    # cit = []
+    # for i in range(len(auth)):
+    #     # print(auth[i])
+    #     if 'index' in auth[i]:
+    #         cit.append([cleaning(auth[i])])
+    #     elif '%' in auth[i]:
+    #         cit[-1].append(cleaning(auth[i]))
+    #     # elif '#c' in auth[i]:
+    #     #     cit[-1].append(cleaning(auth[i]))
+    #     # elif '#t' in auth[i]:
+    #     #     cit[-1].append(cleaning(auth[i]))
+    #     # else:
+    #     #     cit.append([cleaning(auth[i])])
+    # res = [['Source', 'Target']]
+    # i = 0
+    # while i < len(cit):
+    #     if len(cit[i]) > 100:
+    #         j = 4
+    #         while j < len(cit[i]):
+    #             res.append([cit[i][j], cit[i][0]])
+    #             j += 1
+    #     i += 1
+    # print(len(res))
+    #
+    # save_data('Edges.csv', res)
+
     cit = []
     for i in range(len(auth)):
         # print(auth[i])
         if 'index' in auth[i]:
-            cit[-1].append(cleaning(auth[i]))
-        elif '%' in auth[i]:
             cit[-1].append(cleaning(auth[i]))
         elif '#c' in auth[i]:
             cit[-1].append(cleaning(auth[i]))
@@ -61,18 +87,21 @@ if __name__ == '__main__':
             cit[-1].append(cleaning(auth[i]))
         else:
             cit.append([cleaning(auth[i])])
-    res = [['Source', 'Title', 'Year', 'Category', 'Target']]
-    i = 0
-    while i < len(cit):
-        if len(cit[i]) > 100:
-            j = 4
-            while j < len(cit[i]):
-                res.append([cit[i][j], cit[i][0], cit[i][1], cit[i][2], cit[i][3]])
-                j += 1
-        i += 1
-    print(len(res))
 
-    save_data('Data_citation.csv', res)
+    i = 0
+    res = []
+
+    while i < len(cit):
+        if cit[i][-1] not in index:
+            i += 1
+        else:
+            res.append(cit[i])
+            i += 1
+        print(i)
+
+    save_data('Nodes.csv', res)
+
+
 
     
 
